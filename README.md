@@ -90,3 +90,4 @@ Right-click `index.html` → "Open with Live Server"
 ---
 
 © 2026 Next Door Digital. Made with ❤️ in Hyderabad.
+# Deployment Trigger - 2026-02-28 04.39.16
