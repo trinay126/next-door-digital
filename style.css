@@ -1,0 +1,503 @@
+/* =================================================================
+   Next Door Digital — style.css
+   Mobile-first · Minimal animations · Zero lag
+   ================================================================= */
+
+/* ── Base ── */
+body {
+  background: #0b1120;
+  color: #f1f5f9;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; }
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0b1120; }
+::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
+
+/* ── Gradient text ── */
+.text-gradient {
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 40%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #fcd34d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Shimmer text (desktop only) ── */
+.text-shimmer {
+  background: linear-gradient(90deg, #818cf8 0%, #c4b5fd 33%, #818cf8 66%, #c4b5fd 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3.5s linear infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Blob backgrounds (desktop only — hidden on mobile) ── */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+  contain: strict;
+  will-change: auto;
+}
+
+/* ── Glass card ── */
+.glass {
+  background: rgba(30,41,59,0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(148,163,184,0.08);
+  contain: layout style;
+}
+
+/* ── Hover lift ── */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+  contain: layout style;
+}
+.hover-lift:hover { transform: translateY(-5px); }
+
+/* ── Navbar (always visible) ── */
+#navbar {
+  background: rgba(11,17,32,0.88);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Responsive navbar show/hide (replaces Tailwind md: prefix missing from tw.css) ── */
+
+/* Desktop nav + CTA: hidden on mobile, flex row on desktop */
+.nav-desktop {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+
+/* Hamburger button: visible on mobile only */
+#menu-toggle,
+.nav-mobile-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  #menu-toggle,
+  .nav-mobile-btn {
+    display: none !important;
+  }
+}
+
+/* Mobile menu panel: hidden on desktop */
+.nav-mobile-menu {
+  display: block;
+}
+@media (min-width: 768px) {
+  .nav-mobile-menu {
+    display: none !important;
+  }
+}
+
+/* ── Nav link ── */
+.nav-link {
+  position: relative;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+  padding: 6px 4px;
+  white-space: nowrap;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 2px;
+  background: #6366f1;
+  border-radius: 2px;
+  transition: width 0.25s;
+}
+.nav-link:hover { color: #f1f5f9; }
+.nav-link:hover::after { width: 100%; }
+
+/* ── Form inputs ── */
+.form-input {
+  background: rgba(15,23,42,0.8);
+  border: 1.5px solid rgba(99,102,241,0.25);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  color: #f1f5f9;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.form-input::placeholder { color: #475569; }
+.form-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+.form-input.error {
+  border-color: rgba(239,68,68,0.6);
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* ── Badge pill ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ── Pricing ── */
+.price-tag { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 800; line-height: 1; }
+
+/* ── Featured border ── */
+.featured-border { position: relative; }
+.featured-border::before {
+  content: '';
+  position: absolute; inset: -1.5px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #6366f1, #a78bfa, #818cf8);
+  z-index: -1;
+}
+
+/* ── Mobile menu ── */
+#mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+#mobile-menu.open { max-height: 520px; }
+
+/* ── Global ── */
+html { scroll-padding-top: 80px; }
+/* 44px minimum touch targets for accessibility */
+a, button { -webkit-tap-highlight-color: transparent; min-height: 44px; }
+button:active, a:active { opacity: 0.82; }
+:focus-visible { outline: 2px solid #6366f1; outline-offset: 3px; border-radius: 4px; }
+
+/* ── Logo glow (GPU-promoted, single shadow) ── */
+@keyframes logoGlow {
+  0%,100% { filter: drop-shadow(0 0 6px rgba(99,102,241,0.5)); }
+  50%      { filter: drop-shadow(0 0 14px rgba(99,102,241,0.7)); }
+}
+.logo-glow {
+  animation: logoGlow 4s ease-in-out infinite;
+  border-radius: 14px;
+  will-change: filter;
+  contain: layout style;
+}
+
+/* ── Hero keyframes ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0);    }
+  50%      { transform: translateY(-9px); }
+}
+
+/* ── Spinner ── */
+@keyframes _spin { to { transform: rotate(360deg); } }
+
+/* ── Content-visibility (off-screen paint deferral) ── */
+#services, #plans, #demos, #portfolio, #booking, #contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+footer { content-visibility: auto; contain-intrinsic-size: 0 280px; }
+
+/* ── Demo cards ── */
+.demo-card {
+  position: relative;
+  background: rgba(15,23,42,0.75);
+  border: 1px solid rgba(99,102,241,0.18);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  overflow: hidden;
+  contain: layout style;
+}
+.demo-card:hover { transform: translateY(-5px); border-color: rgba(99,102,241,0.5); box-shadow: 0 8px 28px rgba(99,102,241,0.18); }
+.demo-card-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem; flex-shrink: 0;
+}
+.demo-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 50px;
+  background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.28); color: #a5b4fc;
+  width: fit-content;
+}
+.demo-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 44px; padding: 0 22px; border-radius: 50px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #fff; font-size: 0.875rem; font-weight: 700;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  align-self: flex-start; margin-top: auto; user-select: none;
+}
+.demo-btn:hover { background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%); box-shadow: 0 4px 16px rgba(99,102,241,0.38); }
+.demo-btn svg { flex-shrink: 0; }
+.demo-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 640px)  { .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .demo-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Light mode ── */
+html.light body {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+html.light ::-webkit-scrollbar-thumb { background: #6366f1; }
+html.light .glass {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(51,65,85,0.13);
+}
+html.light .nav-link { color: #475569; }
+html.light .nav-link:hover { color: #0f172a; }
+
+/* ── Light mode Navbar: always solid — JS inline styles are cleared in light mode ── */
+html.light #navbar {
+  background: rgba(241,245,249,0.97) !important;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.07) !important;
+  border-bottom: 1px solid rgba(51,65,85,0.12) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+html.light #mobile-menu {
+  background: rgba(241,245,249,0.97) !important;
+  border-color: rgba(51,65,85,0.12);
+}
+/* Mobile menu link colours in light mode */
+html.light #mobile-menu a { color: #334155 !important; }
+html.light #mobile-menu a:hover { color: #0f172a !important; }
+html.light #mobile-menu .border-t { border-color: rgba(51,65,85,0.12) !important; }
+
+html.light .form-input {
+  background: rgba(255,255,255,0.95);
+  border-color: rgba(99,102,241,0.3);
+  color: #1e293b;
+}
+html.light .form-input::placeholder { color: #94a3b8; }
+html.light .form-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+html.light select option { background: #f1f5f9; color: #1e293b; }
+html.light footer { border-color: rgba(51,65,85,0.12); }
+html.light footer .text-slate-400,
+html.light footer .text-slate-500,
+html.light footer .text-slate-600 { color: #64748b !important; }
+
+/* ── Text colour overrides — scoped to avoid breaking coloured-bg buttons ── */
+html.light .text-white     { color: #0f172a !important; }
+html.light .text-slate-200 { color: #1e293b !important; }
+html.light .text-slate-300 { color: #334155 !important; }
+html.light .text-slate-400 { color: #475569 !important; }
+html.light .text-slate-500 { color: #64748b !important; }
+html.light .text-slate-600 { color: #475569 !important; }
+
+/* ── Restore WHITE text on all coloured-background buttons/links ── */
+html.light .bg-indigo-600,
+html.light .bg-indigo-500,
+html.light a.bg-indigo-600,
+html.light button.bg-indigo-600 { color: #ffffff !important; }
+html.light .bg-indigo-600 *,
+html.light .bg-indigo-500 * { color: #ffffff !important; }
+/* gradient CTA buttons (booking submit, etc.) */
+html.light [class*="from-indigo"][class*="to-purple"],
+html.light [class*="from-indigo"][class*="to-purple"] * { color: #ffffff !important; }
+/* demo buttons */
+html.light .demo-btn { color: #ffffff !important; }
+/* scroll-top fab */
+html.light #scroll-top { color: #ffffff !important; }
+
+html.light .border-white\/5  { border-color: rgba(51,65,85,0.10) !important; }
+html.light .border-white\/10 { border-color: rgba(51,65,85,0.15) !important; }
+html.light .bg-\[\#0f172a\]\/95 { background: rgba(241,245,249,0.97) !important; }
+html.light #theme-toggle,
+html.light #theme-toggle-mobile {
+  background: rgba(99,102,241,0.1);
+  border-color: rgba(99,102,241,0.3);
+  color: #0f172a !important;
+}
+html.light .demo-card {
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(99,102,241,0.2);
+}
+html.light .demo-card:hover { border-color: rgba(99,102,241,0.5); }
+html.light .demo-card .text-white { color: #0f172a !important; }
+html.light .demo-card h3 { color: #0f172a !important; }
+
+/* ── Section / card heading text in light mode ── */
+html.light section h2,
+html.light section h3,
+html.light .glass h3,
+html.light .glass h4 { color: #0f172a !important; }
+
+/* ── Badge text in light mode ── */
+html.light .badge.bg-indigo-500\/10 { background: rgba(99,102,241,0.12) !important; }
+html.light .badge.bg-cyan-500\/10   { background: rgba(6,182,212,0.12) !important; }
+html.light .badge.bg-green-500\/10  { background: rgba(34,197,94,0.12) !important; }
+html.light .badge.bg-blue-500\/10   { background: rgba(59,130,246,0.12) !important; }
+html.light .badge.bg-purple-500\/10 { background: rgba(168,85,247,0.12) !important; }
+
+/* ── Digital Hub comparison boxes in light mode ── */
+html.light .border-red-500\/15 { background: rgba(254,242,242,0.8) !important; }
+html.light .border-indigo-500\/25 { background: rgba(238,242,255,0.8) !important; }
+
+/* =======================================================
+   MOBILE PERFORMANCE MODE (<=767px)
+   Kill every GPU-heavy operation:
+   blobs, backdrop-blur, animations, transitions,
+   will-change compositor layers.
+   ======================================================= */
+@media (max-width: 767px) {
+
+  /* 1. Blobs — blur(70px) forces GPU compositing on every scroll frame */
+  .blob { display: none !important; }
+
+  /* 2. backdrop-filter — single biggest fps killer on mobile GPUs */
+  .glass,
+  #mobile-menu,
+  [class*="backdrop"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(11,17,32,0.94) !important;
+  }
+
+  /* 2a. Light-mode glass on mobile — must come AFTER the dark override above */
+  html.light .glass {
+    background: rgba(248,250,252,0.97) !important;
+    border-color: rgba(51,65,85,0.14) !important;
+  }
+  html.light #mobile-menu {
+    background: rgba(241,245,249,0.98) !important;
+    border-color: rgba(51,65,85,0.12) !important;
+  }
+
+  /* 3. Kill ALL animations and transitions site-wide */
+  *, *::before, *::after {
+    animation: none !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+  }
+
+  /* 4. Reveal elements immediately — no scroll fade on mobile */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* 5. No hover effects (touch has no hover) */
+  .hover-lift:hover,
+  .demo-card:hover,
+  .demo-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 6. Logo — plain image, no filter animation */
+  .logo-glow { filter: none !important; }
+
+  /* 7. Release all compositor layers */
+  * { will-change: auto !important; }
+
+  /* 8. Prevent iOS input zoom */
+  .form-input { font-size: 16px !important; padding: 13px 14px; }
+
+  /* 9. Demo button full-width */
+  .demo-btn { width: 100%; justify-content: center; }
+
+  /* 10. Mobile menu: instant open, no slide animation */
+  #mobile-menu { transition: none !important; }
+  #mobile-menu.open { max-height: none; }
+
+  /* 11. Safe-area padding for iPhone notch / Dynamic Island */
+  #navbar > div:first-child {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
+  /* 12. Improve touch tap areas on mobile menu links */
+  #mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+}
+
+/* ── Reduced motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* ── Extra-small screens (<375px) ── */
+@media (max-width: 374px) {
+  html { font-size: 15px; }
+  .price-tag { font-size: 2rem; }
+}
+
+/* ── Tablet (768px–1023px) improvements ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Desktop focus: fluid large-screen padding ── */
+@media (min-width: 1280px) {
+  .max-w-7xl { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* ── Navbar safe-area (notch / Dynamic Island) ── */
+#navbar {
+  padding-top: env(safe-area-inset-top, 0px);
+}
