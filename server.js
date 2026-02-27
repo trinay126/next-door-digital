@@ -195,17 +195,12 @@ app.get('*', (_req, res) => {
 });
 
 /* ── Start ── */
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`✅  Next Door Digital server running → http://localhost:${PORT}`);
-    // Verify SMTP connection if credentials are provided
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      transporter.verify()
-        .then(() => console.log('📧  SMTP connection verified – emails are ready.'))
-        .catch(err => console.warn('⚠️  SMTP verify failed:', err.message));
-    }
-  });
-}
-
-// Export for Vercel serverless
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`✅  Next Door Digital server running → http://localhost:${PORT}`);
+  // Verify SMTP connection if credentials are provided
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    transporter.verify()
+      .then(() => console.log('📧  SMTP connection verified – emails are ready.'))
+      .catch(err => console.warn('⚠️  SMTP verify failed:', err.message));
+  }
+});
