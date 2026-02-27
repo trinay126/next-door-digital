@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "npm install",
     "dev": "nodemon server.js",
     "build-css": "node_modules\\.bin\\tailwindcss.cmd -i tw-input.css -o tw.css --minify"
   },
